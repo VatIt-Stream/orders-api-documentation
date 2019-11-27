@@ -1,0 +1,40 @@
+get:
+  tags:
+    - Flow requests
+  summary: Get the quote
+  operationId: getQuote
+  description: >
+    This will return the available pricing options (estimates) for the quote
+    details supplied
+  responses:
+    '200':
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/quote'
+    '400':
+      description: bad input parameter
+post:
+  tags:
+    - Flow requests
+  summary: Create a quote
+  operationId: createQuote
+  description: |
+    Create a quote on the system, which will then have several estimates
+    associated to it on which an order can be placed
+  responses:
+    '201':
+      description: item created
+    '400':
+      description: 'invalid input, object invalid'
+    '409':
+      description: an existing item already exists
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/quote'
+    description: Inventory item to add

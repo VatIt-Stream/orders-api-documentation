@@ -1,0 +1,21 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: >-
+    This the the Stream API to be able to create quotes and also place orders on
+    the quotes
+  contact:
+    email: developers@vatitstream.com
+tags:
+  - name: Authentication
+    description: Used for lookup of information
+  - name: Flow requests
+    description: General flow requests where the logic sits
+  - name: Static Data
+    description: Used for lookup of information
+security:
+  - bearerAuth: []

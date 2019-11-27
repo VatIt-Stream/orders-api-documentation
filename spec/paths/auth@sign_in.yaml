@@ -1,0 +1,19 @@
+post:
+  tags:
+    - Authentication
+  summary: Create a JWT token for requests
+  description: >
+    Post in the user name and password credentionals to receive a JWT token to
+    be used for authentication.
+
+    The token will last for 24 hours after which a new token will need to be
+    generated
+  responses:
+    '200':
+      description: Successful authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/auth'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

@@ -1,0 +1,7 @@
+properties:
+  id:
+    type: integer
+    example: 1
+  code:
+    type: string
+    example: kg

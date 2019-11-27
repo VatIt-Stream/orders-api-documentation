@@ -1,0 +1,12 @@
+get:
+  tags:
+    - Static Data
+  responses:
+    '200':
+      description: fetch all the 'mass_unit' items
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/mass_unit'
