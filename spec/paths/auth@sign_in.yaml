@@ -8,6 +8,12 @@ post:
 
     The token will last for 24 hours after which a new token will need to be
     generated
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/auth'
+  security: []
   responses:
     '200':
       description: Successful authentication

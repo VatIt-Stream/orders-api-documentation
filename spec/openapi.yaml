@@ -12,7 +12,7 @@ info:
     email: developers@vatitstream.com
 tags:
   - name: Authentication
-    description: Used for lookup of information
+    description: Used to generate the bearer token
   - name: Flow requests
     description: General flow requests where the logic sits
   - name: Static Data

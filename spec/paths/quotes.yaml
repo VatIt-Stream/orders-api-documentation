@@ -1,20 +1,25 @@
 get:
   tags:
     - Flow requests
-  summary: Get the quote
+  parameters:
+    - in: path
+      name: quote_id
+      schema:
+        type: integer
+      required: true
+      description: id of an existing quote
+  summary: 'Get specific quote, that was already created'
   operationId: getQuote
   description: >
     This will return the available pricing options (estimates) for the quote
     details supplied
   responses:
     '200':
-      description: search results matching criteria
+      description: get a quote that was created recently
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/quote'
+            $ref: '#/components/schemas/quote_response'
     '400':
       description: bad input parameter
 post:
@@ -28,10 +33,12 @@ post:
   responses:
     '201':
       description: item created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/quote_response'
     '400':
       description: 'invalid input, object invalid'
-    '409':
-      description: an existing item already exists
   requestBody:
     content:
       application/json:

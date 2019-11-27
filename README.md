@@ -1,6 +1,5 @@
 # Stream Orders Api OpenAPI Specification
 
-
 ## Working on specification
 ### Install
 
@@ -15,7 +14,7 @@ Starts the development server.
 #### `npm run build`
 Bundles the spec and prepares web_deploy folder with static assets.
 
-#### `npm test`
+#### `npm run gh-pages`
 Validates the spec.
 
 #### `npm run gh-pages`

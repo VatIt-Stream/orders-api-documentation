@@ -1,4 +1,13 @@
 get:
+  parameters:
+    - in: query
+      name: show_all
+      schema:
+        type: boolean
+        enum:
+          - true
+          - false
+      description: Select true not to paginate the results Do not paginate the results
   tags:
     - Static Data
   responses:
