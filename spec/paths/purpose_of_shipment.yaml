@@ -1,0 +1,12 @@
+get:
+  tags:
+    - Static Data
+  responses:
+    '200':
+      description: fetch all the 'purpose_of_shipment' items
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/purpose_of_shipment'
