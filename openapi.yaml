@@ -10,7 +10,7 @@ info:
     email: developers@vatitstream.com
 tags:
   - name: Authentication
-    description: Used for lookup of information
+    description: Used to generate the bearer token
   - name: Flow requests
     description: General flow requests where the logic sits
   - name: Static Data
@@ -26,6 +26,12 @@ paths:
       description: |
         Post in the user name and password credentionals to receive a JWT token to be used for authentication.
         The token will last for 24 hours after which a new token will need to be generated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth'
+      security: []
       responses:
         '200':
           description: Successful authentication
@@ -35,8 +41,17 @@ paths:
                 $ref: '#/components/schemas/auth'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-  /country:
+  /countries:
     get:
+      parameters:
+        - in: query
+          name: show_all
+          schema:
+            type: boolean
+            enum:
+              - true
+              - false
+          description: Select true not to paginate the results Do not paginate the results
       tags:
         - Static Data
       responses:
@@ -48,7 +63,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/country'
-  /currency:
+  /currencies:
     get:
       tags:
         - Static Data
@@ -61,33 +76,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/currency'
-  /distance_unit:
-    get:
-      tags:
-        - Static Data
-      responses:
-        '200':
-          description: fetch all the 'distance_unit' items
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/distance_unit'
-  /mass_unit:
-    get:
-      tags:
-        - Static Data
-      responses:
-        '200':
-          description: fetch all the 'mass_unit' items
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/mass_unit'
-  /purpose_of_shipment:
+  /purpose_of_shipments:
     get:
       tags:
         - Static Data
@@ -104,19 +93,24 @@ paths:
     get:
       tags:
         - Flow requests
-      summary: Get the quote
+      parameters:
+        - in: path
+          name: quote_id
+          schema:
+            type: integer
+          required: true
+          description: id of an existing quote
+      summary: 'Get specific quote, that was already created'
       operationId: getQuote
       description: |
         This will return the available pricing options (estimates) for the quote details supplied
       responses:
         '200':
-          description: search results matching criteria
+          description: get a quote that was created recently
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/quote'
+                $ref: '#/components/schemas/quote_response'
         '400':
           description: bad input parameter
     post:
@@ -130,10 +124,12 @@ paths:
       responses:
         '201':
           description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/quote_response'
         '400':
           description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
       requestBody:
         content:
           application/json:
@@ -182,14 +178,6 @@ components:
         un_code:
           type: string
           example: UN3090
-    distance_unit:
-      properties:
-        id:
-          type: integer
-          example: 1
-        code:
-          type: string
-          example: kg
     estimate:
       type: object
       properties:
@@ -314,15 +302,6 @@ components:
         currency_id:
           type: string
           example: USD
-    mass_unit:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        code:
-          type: string
-          example: cm
     package:
       type: object
       required:
@@ -355,6 +334,68 @@ components:
         code:
           type: string
           example: CIF
+    quote_response:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        estimates:
+          type: array
+          items:
+            $ref: '#/components/schemas/estimate'
+        origin_country_id:
+          type: integer
+          example: 1
+        destination_country_id:
+          type: integer
+          example: 2
+        value_of_goods:
+          type: string
+          format: Money
+          example: '600.00'
+        value_of_goods_currency_id:
+          type: string
+          format: 3 Digit Currency Code
+          example: ZAR
+        purpose_of_shipment_id:
+          type: integer
+          example: 8
+        is_document:
+          type: boolean
+          example: true
+        is_stackable:
+          type: boolean
+          example: true
+        is_shipment_protection_required:
+          type: boolean
+          example: true
+        dangerous_goods_present:
+          type: boolean
+          example: false
+        distance_unit:
+          type: string
+          format: cm/in
+          example: cm
+        mass_unit:
+          type: string
+          format: kg/lb
+          example: kg
+        iata_approved:
+          type: boolean
+          example: true
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/package'
+        dangerous_goods:
+          type: array
+          items:
+            $ref: '#/components/schemas/dangerous_goods'
+        hs_codes:
+          type: array
+          items:
+            $ref: '#/components/schemas/hs_code'
     quote:
       type: object
       required:
