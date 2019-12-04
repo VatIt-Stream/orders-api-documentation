@@ -1,7 +1,7 @@
 post:
   tags:
     - Flow requests
-  summary: 'Create a new quote, to view the different estimate pricing options'
+  summary: 'Quote - Create'
   operationId: createQuote
   description: >
     Create a quote on the system, which will then have several estimates

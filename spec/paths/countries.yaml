@@ -7,7 +7,7 @@ get:
         enum:
           - true
           - false
-      description: Select true not to paginate the results Do not paginate the results
+      description: Select true not to paginate the results.
   summary: Countries
   tags:
     - Static Data

@@ -3,14 +3,15 @@ post:
     - Initial Authentication
   summary: Create a JWT token for subsequent requests
   description: >
-    Post in the user name and password credentionals to receive a JWT token to
-    be used for authentication.
+    Post in the username and password credentials to receive a JWT token to
+    be used for authentication. <br/><br/>
 
-    Once you have done this and received the token place this token in the
-    "Authorize" section at the top right of the page to authenticate all the
-    calls that use the JWT token.
+    Once you have done this and received the response token, you may use it in the
+    Header of subsequent requests for authentication:<br/><br/>
 
-    The token will last for 24 hours after which a new token will need to be
+    `Authorization: Bearer {INSERT TOKEN HERE}` <br/><br/>
+
+    The token will last for 6 hours or until midnight (GMT), whichever is longer, after which a new token will need to be
     generated
   requestBody:
     content:
@@ -24,6 +25,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/auth'
+            $ref: '#/components/schemas/auth_response'
     '401':
       $ref: '#/components/responses/UnauthorizedError'

@@ -1,6 +1,7 @@
 get:
   tags:
     - Flow requests
+  summary: 'Quote - GET'
   parameters:
     - in: path
       name: id
@@ -8,7 +9,6 @@ get:
         type: integer
       required: true
       description: id of an existing quote
-  summary: 'Get specific quote, that was already created'
   operationId: getQuote
   description: >
     This will return the available pricing options (estimates) for the quote
