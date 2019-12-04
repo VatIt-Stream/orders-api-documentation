@@ -1,10 +1,14 @@
 post:
   tags:
-    - Authentication
-  summary: Create a JWT token for requests
+    - Initial Authentication
+  summary: Create a JWT token for subsequent requests
   description: >
     Post in the user name and password credentionals to receive a JWT token to
     be used for authentication.
+
+    Once you have done this and received the token place this token in the
+    "Authorize" section at the top right of the page to authenticate all the
+    calls that use the JWT token.
 
     The token will last for 24 hours after which a new token will need to be
     generated

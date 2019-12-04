@@ -15,7 +15,4 @@ Starts the development server.
 Bundles the spec and prepares web_deploy folder with static assets.
 
 #### `npm run gh-pages`
-Validates the spec.
-
-#### `npm run gh-pages`
 Deploys docs to GitHub Pages. You don't need to run it manually if you have Travis CI configured.

@@ -1,11 +1,15 @@
 post:
   tags:
     - Flow requests
-  summary: Create a quote
+  summary: 'Create a new quote, to view the different estimate pricing options'
   operationId: createQuote
-  description: |
+  description: >
     Create a quote on the system, which will then have several estimates
-    associated to it on which an order can be placed
+
+    associated to it on which an order can be placed. These are called estimates
+    as the final costs will be determined when the undelying provider measures
+    the packages and provides a final offical billable weight. This (the
+    billable) is regularly incorrectly stated by clients
   responses:
     '201':
       description: item created

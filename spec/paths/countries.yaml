@@ -8,6 +8,7 @@ get:
           - true
           - false
       description: Select true not to paginate the results Do not paginate the results
+  summary: Countries
   tags:
     - Static Data
   responses:

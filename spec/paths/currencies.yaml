@@ -1,4 +1,5 @@
 get:
+  summary: Currencies
   tags:
     - Static Data
   responses:

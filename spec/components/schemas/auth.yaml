@@ -5,7 +5,7 @@ properties:
     properties:
       email:
         type: string
-        example: your_email@example.com
+        example: sandbox@vatitstream.com
       password:
         type: string
-        example: secret
+        example: sandbox_secret
