@@ -29,7 +29,7 @@ paths:
         Post in the username and password credentials to receive a JWT token to be used for authentication. <br/><br/>
         Once you have done this and received the response token, you may use it in the Header of subsequent requests for authentication:<br/><br/>
         `Authorization: Bearer {INSERT TOKEN HERE}` <br/><br/>
-        The token will last for **24 hours** after which a new token will need to be generated
+        The token will last for 6 hours or until midnight (SAST), whichever is longer, after which a new token will need to be generated
       requestBody:
         content:
           application/json:
@@ -42,7 +42,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/auth'
+                $ref: '#/components/schemas/auth_response'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
   /countries:
@@ -100,7 +100,7 @@ paths:
     post:
       tags:
         - Flow requests
-      summary: Quote - Get
+      summary: Quote - Create
       operationId: createQuote
       description: |
         Create a quote on the system, which will then have several estimates
@@ -124,7 +124,7 @@ paths:
     get:
       tags:
         - Flow requests
-      summary: Quote - Create
+      summary: Quote - GET
       parameters:
         - in: path
           name: id
@@ -146,6 +146,12 @@ paths:
           description: bad input parameter
 components:
   schemas:
+    auth_response:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzadfaskdjLKSAJSLdkoIASjdlaksjoj
     auth:
       type: object
       properties:
@@ -154,10 +160,10 @@ components:
           properties:
             email:
               type: string
-              example: sandbox@vatitstream.com
+              example: email@email.com
             password:
               type: string
-              example: sandbox_secret
+              example: p@55w0rd
     country:
       type: object
       properties:
