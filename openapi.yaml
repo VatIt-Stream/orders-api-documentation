@@ -3,13 +3,15 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: 'https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/'
 info:
-  description: This is a simple API
+  description: |
+    Version 1 - Contains ability to create quotes and view the pricing on the different providers
+    sds
   version: 1.0.0
-  title: This the the Stream API to be able to create quotes and also place orders on the quotes
+  title: This the the Stream API to be able to create quotes
   contact:
     email: developers@vatitstream.com
 tags:
-  - name: Authentication
+  - name: Initial Authentication
     description: Used to generate the bearer token
   - name: Flow requests
     description: General flow requests where the logic sits
@@ -21,10 +23,11 @@ paths:
   /auth/sign_in:
     post:
       tags:
-        - Authentication
-      summary: Create a JWT token for requests
+        - Initial Authentication
+      summary: Create a JWT token for subsequent requests
       description: |
         Post in the user name and password credentionals to receive a JWT token to be used for authentication.
+        Once you have done this and received the token place this token in the "Authorize" section at the top right of the page to authenticate all the calls that use the JWT token.
         The token will last for 24 hours after which a new token will need to be generated
       requestBody:
         content:
@@ -52,6 +55,7 @@ paths:
               - true
               - false
           description: Select true not to paginate the results Do not paginate the results
+      summary: Countries
       tags:
         - Static Data
       responses:
@@ -65,6 +69,7 @@ paths:
                   $ref: '#/components/schemas/country'
   /currencies:
     get:
+      summary: Currencies
       tags:
         - Static Data
       responses:
@@ -78,11 +83,12 @@ paths:
                   $ref: '#/components/schemas/currency'
   /purpose_of_shipments:
     get:
+      summary: Purpose of Shipment (or IncoTerms)
       tags:
         - Static Data
       responses:
         '200':
-          description: fetch all the 'purpose_of_shipment' items
+          description: fetch all the 'purpose_of_shipment' items. Also known as the IncoTerms
           content:
             application/json:
               schema:
@@ -90,12 +96,36 @@ paths:
                 items:
                   $ref: '#/components/schemas/purpose_of_shipment'
   /quotes:
+    post:
+      tags:
+        - Flow requests
+      summary: 'Create a new quote, to view the different estimate pricing options'
+      operationId: createQuote
+      description: |
+        Create a quote on the system, which will then have several estimates
+        associated to it on which an order can be placed. These are called estimates as the final costs will be determined when the undelying provider measures the packages and provides a final offical billable weight. This (the billable) is regularly incorrectly stated by clients
+      responses:
+        '201':
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/quote_response'
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/quote'
+        description: Inventory item to add
+  '/quotes/{id}':
     get:
       tags:
         - Flow requests
       parameters:
         - in: path
-          name: quote_id
+          name: id
           schema:
             type: integer
           required: true
@@ -113,29 +143,6 @@ paths:
                 $ref: '#/components/schemas/quote_response'
         '400':
           description: bad input parameter
-    post:
-      tags:
-        - Flow requests
-      summary: Create a quote
-      operationId: createQuote
-      description: |
-        Create a quote on the system, which will then have several estimates
-        associated to it on which an order can be placed
-      responses:
-        '201':
-          description: item created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/quote_response'
-        '400':
-          description: 'invalid input, object invalid'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/quote'
-        description: Inventory item to add
 components:
   schemas:
     auth:
@@ -146,10 +153,10 @@ components:
           properties:
             email:
               type: string
-              example: your_email@example.com
+              example: sandbox@vatitstream.com
             password:
               type: string
-              example: secret
+              example: sandbox_secret
     country:
       type: object
       properties:

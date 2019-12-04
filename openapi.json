@@ -7,16 +7,16 @@
     }
   ],
   "info": {
-    "description": "This is a simple API",
+    "description": "Version 1 - Contains ability to create quotes and view the pricing on the different providers\nsds\n",
     "version": "1.0.0",
-    "title": "This the the Stream API to be able to create quotes and also place orders on the quotes",
+    "title": "This the the Stream API to be able to create quotes",
     "contact": {
       "email": "developers@vatitstream.com"
     }
   },
   "tags": [
     {
-      "name": "Authentication",
+      "name": "Initial Authentication",
       "description": "Used to generate the bearer token"
     },
     {
@@ -37,10 +37,10 @@
     "/auth/sign_in": {
       "post": {
         "tags": [
-          "Authentication"
+          "Initial Authentication"
         ],
-        "summary": "Create a JWT token for requests",
-        "description": "Post in the user name and password credentionals to receive a JWT token to be used for authentication.\nThe token will last for 24 hours after which a new token will need to be generated\n",
+        "summary": "Create a JWT token for subsequent requests",
+        "description": "Post in the user name and password credentionals to receive a JWT token to be used for authentication.\nOnce you have done this and received the token place this token in the \"Authorize\" section at the top right of the page to authenticate all the calls that use the JWT token.\nThe token will last for 24 hours after which a new token will need to be generated\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -84,6 +84,7 @@
             "description": "Select true not to paginate the results Do not paginate the results"
           }
         ],
+        "summary": "Countries",
         "tags": [
           "Static Data"
         ],
@@ -106,6 +107,7 @@
     },
     "/currencies": {
       "get": {
+        "summary": "Currencies",
         "tags": [
           "Static Data"
         ],
@@ -128,12 +130,13 @@
     },
     "/purpose_of_shipments": {
       "get": {
+        "summary": "Purpose of Shipment (or IncoTerms)",
         "tags": [
           "Static Data"
         ],
         "responses": {
           "200": {
-            "description": "fetch all the 'purpose_of_shipment' items",
+            "description": "fetch all the 'purpose_of_shipment' items. Also known as the IncoTerms",
             "content": {
               "application/json": {
                 "schema": {
@@ -149,47 +152,13 @@
       }
     },
     "/quotes": {
-      "get": {
-        "tags": [
-          "Flow requests"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "quote_id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "id of an existing quote"
-          }
-        ],
-        "summary": "Get specific quote, that was already created",
-        "operationId": "getQuote",
-        "description": "This will return the available pricing options (estimates) for the quote details supplied\n",
-        "responses": {
-          "200": {
-            "description": "get a quote that was created recently",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/quote_response"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        }
-      },
       "post": {
         "tags": [
           "Flow requests"
         ],
-        "summary": "Create a quote",
+        "summary": "Create a new quote, to view the different estimate pricing options",
         "operationId": "createQuote",
-        "description": "Create a quote on the system, which will then have several estimates\nassociated to it on which an order can be placed\n",
+        "description": "Create a quote on the system, which will then have several estimates\nassociated to it on which an order can be placed. These are called estimates as the final costs will be determined when the undelying provider measures the packages and provides a final offical billable weight. This (the billable) is regularly incorrectly stated by clients\n",
         "responses": {
           "201": {
             "description": "item created",
@@ -216,6 +185,42 @@
           "description": "Inventory item to add"
         }
       }
+    },
+    "/quotes/{id}": {
+      "get": {
+        "tags": [
+          "Flow requests"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "id of an existing quote"
+          }
+        ],
+        "summary": "Get specific quote, that was already created",
+        "operationId": "getQuote",
+        "description": "This will return the available pricing options (estimates) for the quote details supplied\n",
+        "responses": {
+          "200": {
+            "description": "get a quote that was created recently",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/quote_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -228,11 +233,11 @@
             "properties": {
               "email": {
                 "type": "string",
-                "example": "your_email@example.com"
+                "example": "sandbox@vatitstream.com"
               },
               "password": {
                 "type": "string",
-                "example": "secret"
+                "example": "sandbox_secret"
               }
             }
           }
