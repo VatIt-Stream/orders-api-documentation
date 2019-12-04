@@ -26,9 +26,10 @@ paths:
         - Initial Authentication
       summary: Create a JWT token for subsequent requests
       description: |
-        Post in the user name and password credentionals to receive a JWT token to be used for authentication.
-        Once you have done this and received the token place this token in the "Authorize" section at the top right of the page to authenticate all the calls that use the JWT token.
-        The token will last for 24 hours after which a new token will need to be generated
+        Post in the username and password credentials to receive a JWT token to be used for authentication. <br/><br/>
+        Once you have done this and received the response token, you may use it in the Header of subsequent requests for authentication:<br/><br/>
+        `Authorization: Bearer {INSERT TOKEN HERE}` <br/><br/>
+        The token will last for **24 hours** after which a new token will need to be generated
       requestBody:
         content:
           application/json:
@@ -54,7 +55,7 @@ paths:
             enum:
               - true
               - false
-          description: Select true not to paginate the results Do not paginate the results
+          description: Select true not to paginate the results.
       summary: Countries
       tags:
         - Static Data
@@ -99,7 +100,7 @@ paths:
     post:
       tags:
         - Flow requests
-      summary: 'Create a new quote, to view the different estimate pricing options'
+      summary: Quote - Get
       operationId: createQuote
       description: |
         Create a quote on the system, which will then have several estimates
@@ -123,6 +124,7 @@ paths:
     get:
       tags:
         - Flow requests
+      summary: Quote - Create
       parameters:
         - in: path
           name: id
@@ -130,7 +132,6 @@ paths:
             type: integer
           required: true
           description: id of an existing quote
-      summary: 'Get specific quote, that was already created'
       operationId: getQuote
       description: |
         This will return the available pricing options (estimates) for the quote details supplied

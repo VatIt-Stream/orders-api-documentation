@@ -40,7 +40,7 @@
           "Initial Authentication"
         ],
         "summary": "Create a JWT token for subsequent requests",
-        "description": "Post in the user name and password credentionals to receive a JWT token to be used for authentication.\nOnce you have done this and received the token place this token in the \"Authorize\" section at the top right of the page to authenticate all the calls that use the JWT token.\nThe token will last for 24 hours after which a new token will need to be generated\n",
+        "description": "Post in the username and password credentials to receive a JWT token to be used for authentication. <br/><br/>\nOnce you have done this and received the response token, you may use it in the Header of subsequent requests for authentication:<br/><br/>\n`Authorization: Bearer {INSERT TOKEN HERE}` <br/><br/>\nThe token will last for **24 hours** after which a new token will need to be generated\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -81,7 +81,7 @@
                 false
               ]
             },
-            "description": "Select true not to paginate the results Do not paginate the results"
+            "description": "Select true not to paginate the results."
           }
         ],
         "summary": "Countries",
@@ -156,7 +156,7 @@
         "tags": [
           "Flow requests"
         ],
-        "summary": "Create a new quote, to view the different estimate pricing options",
+        "summary": "Quote - Get",
         "operationId": "createQuote",
         "description": "Create a quote on the system, which will then have several estimates\nassociated to it on which an order can be placed. These are called estimates as the final costs will be determined when the undelying provider measures the packages and provides a final offical billable weight. This (the billable) is regularly incorrectly stated by clients\n",
         "responses": {
@@ -191,6 +191,7 @@
         "tags": [
           "Flow requests"
         ],
+        "summary": "Quote - Create",
         "parameters": [
           {
             "in": "path",
@@ -202,7 +203,6 @@
             "description": "id of an existing quote"
           }
         ],
-        "summary": "Get specific quote, that was already created",
         "operationId": "getQuote",
         "description": "This will return the available pricing options (estimates) for the quote details supplied\n",
         "responses": {
