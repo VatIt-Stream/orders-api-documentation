@@ -4,6 +4,7 @@ required:
   - destination_country_id
   - is_document
   - is_stackable
+  - is_liftgate_required
   - purpose_of_shipment_id
   - is_shipment_protection_required
   - value_of_goods
@@ -36,6 +37,9 @@ properties:
     type: boolean
     example: true
   is_stackable:
+    type: boolean
+    example: true
+  is_liftgate_required:
     type: boolean
     example: true
   is_shipment_protection_required:
