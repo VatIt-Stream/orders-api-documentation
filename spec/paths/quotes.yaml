@@ -23,5 +23,5 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/quote'
+          $ref: '#/components/schemas/quote_request'
     description: Inventory item to add

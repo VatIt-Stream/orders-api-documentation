@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Flow requests
+  summary: 'Pickup Availabilities - GET'
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: id of an existing order
+  operationId: getAvailabilities
+  description: >
+    This will return all available dates and times that a pick up may be scheduled for the specified order
+  responses:
+    '200':
+      description: get pickup availabilities for specified order
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/pickup_availabilties'
+    '400':
+      description: bad input parameter

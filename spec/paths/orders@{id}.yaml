@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Flow requests
+  summary: 'Order - GET'
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: id of an existing order
+  operationId: getOrder
+  description: >
+    This will return the details of the specified order
+  responses:
+    '200':
+      description: get a existing order
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/order_response'
+    '400':
+      description: bad input parameter

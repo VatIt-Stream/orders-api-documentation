@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Flow requests
+  summary: 'Tracking - GET'
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: id of an existing order
+  operationId: getTracking
+  description:
+    This will return all the tracking events of a specified order
+  responses:
+    '200':
+      description: get tracking events for specified order
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tracking'
+    '400':
+      description: bad input parameter

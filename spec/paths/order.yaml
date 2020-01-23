@@ -1,0 +1,21 @@
+post:
+  tags:
+    - Flow requests
+  summary: 'Order - Create'
+  operationId: createOrder
+  description: >
+    Create a order on the system, which will then be processed and handled by Stream
+  responses:
+    '201':
+      description: item created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/order_response'
+    '400':
+      description: 'invalid input, object invalid'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/order'
