@@ -1,7 +1,7 @@
 get:
   tags:
-    - Flow requests
-  summary: 'Order - GET'
+    - Order
+  summary: 'Order'
   parameters:
     - in: path
       name: id
@@ -11,7 +11,7 @@ get:
       description: id of an existing order
   operationId: getOrder
   description: >
-    This will return the details of the specified order
+    This will return all the details of the specified order
   responses:
     '200':
       description: get a existing order

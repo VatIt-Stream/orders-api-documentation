@@ -1,7 +1,7 @@
 get:
   tags:
-    - Flow requests
-  summary: 'Pickup Availabilities - GET'
+    - Order
+  summary: 'Order - Pickup Availabilities'
   parameters:
     - in: path
       name: id
@@ -11,7 +11,7 @@ get:
       description: id of an existing order
   operationId: getAvailabilities
   description: >
-    This will return all available dates and times that a pick up may be scheduled for the specified order
+    This will return an array of availabilities which specify specific dates, times and durations in the near future where a pickup can be scheduled for the specified order
   responses:
     '200':
       description: get pickup availabilities for specified order

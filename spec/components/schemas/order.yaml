@@ -10,8 +10,6 @@ properties:
       - quote_estimate_id
       - customer_reference
       - description_of_contents
-      - importer_of_record
-      - broker
     properties:
       origin_address:
         type: object
@@ -44,3 +42,11 @@ properties:
         type: object
         items:
         $ref: '#/components/schemas/importer_of_record'
+      commercial_invoice:
+        type: string
+        format: binary
+        example: 'file'
+      materials_safety_data_sheet:
+        type: string
+        format: binary
+        example: 'file'

@@ -1,7 +1,7 @@
 get:
   tags:
-    - Flow requests
-  summary: 'Quote - GET'
+    - Quote
+  summary: 'Quote'
   parameters:
     - in: path
       name: id
