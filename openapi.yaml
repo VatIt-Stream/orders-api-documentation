@@ -4,17 +4,18 @@ servers:
     url: 'https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/'
 info:
   description: |
-    Version 1 - Contains ability to create quotes and view the pricing on the different providers
-    sds
-  version: 1.0.0
-  title: This the the Stream API to be able to create quotes
+    Version 1.1.0 - API Documentation for Stream system
+  version: 1.1.0
+  title: This is the Stream API documentation to be able to interact with the Stream system
   contact:
     email: developers@vatitstream.com
 tags:
   - name: Initial Authentication
     description: Used to generate the bearer token
-  - name: Flow requests
-    description: General flow requests where the logic sits
+  - name: Quote
+    description: The flow for creating and fetching quotes
+  - name: Order
+    description: The flow for creating and fetching orders along with additional operations which can be peformed on orders
   - name: Static Data
     description: Used for lookup of information
 security:
@@ -82,6 +83,128 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/currency'
+  /order:
+    post:
+      tags:
+        - Order
+      summary: Order
+      operationId: createOrder
+      description: |
+        Creates an order on the stream system. If you will be uploading the files such as the commercial invoice or materials safety data sheet, you can use a 'multipart/form-data' request body type instead
+      responses:
+        '201':
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order_response'
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/order'
+  '/orders/{id}':
+    get:
+      tags:
+        - Order
+      summary: Order
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of an existing order
+      operationId: getOrder
+      description: |
+        This will return all the details of the specified order
+      responses:
+        '200':
+          description: get a existing order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order_response'
+        '400':
+          description: bad input parameter
+  '/orders/{id}/pickup_availabilities':
+    get:
+      tags:
+        - Order
+      summary: Order - Pickup Availabilities
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of an existing order
+      operationId: getAvailabilities
+      description: |
+        This will return an array of availabilities which specify specific dates, times and durations in the near future where a pickup can be scheduled for the specified order
+      responses:
+        '200':
+          description: get pickup availabilities for specified order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickup_availabilties'
+        '400':
+          description: bad input parameter
+  '/orders/{id}/schedule_pickups':
+    post:
+      tags:
+        - Order
+      summary: Order - Scheduled Pickups
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of an existing order
+      operationId: createScheduledPickup
+      description: |
+        This will create a scheudled pickup for the specified order and attempt to schedule the pickup with the shipping company of the order, if this fails an appropriate error message will be returned and the Stream team will be notified of the failure
+      responses:
+        '201':
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scheduled_pickup'
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/scheduled_pickup_request'
+  '/orders/{id}/tracking':
+    get:
+      tags:
+        - Order
+      summary: Order - Tracking
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of an existing order
+      operationId: getTracking
+      description: This will return any tracking events from the shipping company for the specified order
+      responses:
+        '200':
+          description: get tracking events for specified order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tracking'
+        '400':
+          description: bad input parameter
   /purpose_of_shipments:
     get:
       summary: Purpose of Shipment (or IncoTerms)
@@ -99,12 +222,12 @@ paths:
   /quotes:
     post:
       tags:
-        - Flow requests
-      summary: Quote - Create
+        - Quote
+      summary: Quote
       operationId: createQuote
       description: |
         Create a quote on the system, which will then have several estimates
-        associated to it on which an order can be placed. These are called estimates as the final costs will be determined when the undelying provider measures the packages and provides a final offical billable weight. This (the billable) is regularly incorrectly stated by clients
+        associated to it on which an order can be placed. These are called estimates as the final costs will be determined when the underlying provider measures the packages and provides a final official billable weight. This (the billable) is regularly incorrectly stated by clients
       responses:
         '201':
           description: item created
@@ -118,13 +241,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/quote'
+              $ref: '#/components/schemas/quote_request'
         description: Inventory item to add
   '/quotes/{id}':
     get:
       tags:
-        - Flow requests
-      summary: Quote - GET
+        - Quote
+      summary: Quote
       parameters:
         - in: path
           name: id
@@ -146,6 +269,48 @@ paths:
           description: bad input parameter
 components:
   schemas:
+    address:
+      type: object
+      required:
+        - name
+        - address_1
+        - city
+        - province
+        - postal_code
+        - country_id
+        - email
+        - phone
+      properties:
+        name:
+          type: string
+          example: My House
+        company:
+          type: string
+          example: Company Name
+        address_1:
+          type: string
+          example: 5 Open Street
+        address_2:
+          type: string
+          example: Melrose Arch
+        city:
+          type: string
+          example: Johannesburg
+        province:
+          type: string
+          example: Gauteng
+        postal_code:
+          type: string
+          example: '1610'
+        country_id:
+          type: integer
+          example: 235
+        email:
+          type: string
+          example: example@stream.com
+        phone:
+          type: string
+          example: '+27825547358'
     auth_response:
       type: object
       properties:
@@ -164,6 +329,23 @@ components:
             password:
               type: string
               example: p@55w0rd
+    broker:
+      type: object
+      required:
+        - address
+        - vat_number
+        - import_code
+      properties:
+        address:
+          type: object
+          items: null
+          $ref: '#/components/schemas/address'
+        vat_number:
+          type: string
+          example: BF4887450
+        import_code:
+          type: string
+          example: S1A485
     country:
       type: object
       properties:
@@ -301,6 +483,23 @@ components:
           type: integer
           format: (country of origin of goods)
           example: 5
+    importer_of_record:
+      type: object
+      required:
+        - address
+        - vat_number
+        - import_code
+      properties:
+        address:
+          type: object
+          items: null
+          $ref: '#/components/schemas/address'
+        vat_number:
+          type: string
+          example: BF4887450
+        import_code:
+          type: string
+          example: S1A485
     line_item:
       type: object
       properties:
@@ -316,6 +515,171 @@ components:
         currency_id:
           type: string
           example: USD
+    order_response:
+      type: object
+      properties:
+        order:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            purpose_of_shipment_id:
+              type: integer
+              example: 8
+            pickup_date:
+              type: string
+              example: 20-01-2020
+            status:
+              type: string
+              example: order_received
+            waybill:
+              type: string
+              example: '123456789'
+            tracking_link:
+              type: string
+              example: wwww.streamfiles.com/order123/tracking
+            reference_number:
+              type: string
+              example: Stream0014
+            customer_reference:
+              type: string
+              example: Ref0000
+            measured_weight:
+              type: integer
+              example: 230
+            description_of_contents:
+              type: string
+              example: Networking Equipment
+            date_delivered:
+              type: string
+              example: 22-02-2020
+            internal_transaction_number:
+              type: string
+              example: '235688794235684'
+            quote_id:
+              type: integer
+              example: 1
+            commercial_invoice_link:
+              type: string
+              example: wwww.streamfiles.com/order123/commercial_invoice
+            packaging_list_link:
+              type: string
+              example: wwww.streamfiles.com/order123/packaging_list
+            waybill_document_link:
+              type: string
+              example: wwww.streamfiles.com/order123/waybill_document
+            customs_clearance_document_link:
+              type: string
+              example: wwww.streamfiles.com/order123/customs_clearance_document
+            materials_safety_data_sheet_link:
+              type: string
+              example: wwww.streamfiles.com/order123/materials_safety_data_sheet
+            battery_declaration_link:
+              type: string
+              example: wwww.streamfiles.com/order123/battery_declaration
+            invoice_document_link:
+              type: string
+              example: wwww.streamfiles.com/order123/invoice_document
+            proof_of_delivery_link:
+              type: string
+              example: wwww.streamfiles.com/order123/proof_of_delivery
+            draft_bill_of_lading_link:
+              type: string
+              example: wwww.streamfiles.com/order123/draft_bill_of_lading
+            final_bill_of_lading_link:
+              type: string
+              example: wwww.streamfiles.com/order123/final_bill_of_lading
+            shippers_letter_of_instruction_link:
+              type: string
+              example: wwww.streamfiles.com/order123/shippers_letter_of_instruction
+            eei_request_document_link:
+              type: string
+              example: wwww.streamfiles.com/order123/eei_request_document
+            export_permit_link:
+              type: string
+              example: wwww.streamfiles.com/order123/export_permit
+            invoice_number:
+              type: string
+              example: '123456'
+            eei_eligible:
+              type: boolean
+              example: true
+            ccd_status:
+              type: string
+              example: not_required
+            origin_address:
+              type: object
+              items: null
+              $ref: '#/components/schemas/address'
+            destination_address:
+              type: object
+              item: null
+              $ref: '#/components/schemas/address'
+            broker:
+              type: object
+              item: null
+              $ref: '#/components/schemas/broker'
+            importer_of_record:
+              type: object
+              item: null
+              $ref: '#/components/schemas/importer_of_record'
+            assigned_admin:
+              type: string
+              example: admin@vatitstream.com
+    order:
+      type: object
+      properties:
+        order:
+          type: object
+          required:
+            - origin_address
+            - destination_address
+            - pickup_instructions
+            - purpose_of_shipment_id
+            - quote_estimate_id
+            - customer_reference
+            - description_of_contents
+          properties:
+            origin_address:
+              type: object
+              items: null
+              $ref: '#/components/schemas/address'
+            destination_address:
+              type: object
+              items: null
+              $ref: '#/components/schemas/address'
+            pickup_instructions:
+              type: string
+              example: Additional pickup information
+            purpose_of_shipment_id:
+              type: integer
+              example: 8
+            quote_estimate_id:
+              type: integer
+              example: 14124
+            customer_reference:
+              type: string
+              example: Ref0000
+            description_of_contents:
+              type: string
+              example: Networking Equipment
+            broker:
+              type: object
+              items: null
+              $ref: '#/components/schemas/broker'
+            importer_of_record:
+              type: object
+              items: null
+              $ref: '#/components/schemas/importer_of_record'
+            commercial_invoice:
+              type: string
+              format: binary
+              example: file
+            materials_safety_data_sheet:
+              type: string
+              format: binary
+              example: file
     package:
       type: object
       required:
@@ -336,6 +700,28 @@ components:
         length:
           type: number
           example: 5.5
+    pickup_availability:
+      type: object
+      properties:
+        pickup_date:
+          type: string
+          example: 20-01-2020
+        cut_off_time:
+          type: string
+          example: '16:00.00'
+        minimum_access_duration_minutes:
+          type: integer
+          example: 180
+        earliest_pickup_time:
+          type: string
+          example: '12:00.00'
+        time_zone_id:
+          type: string
+          example: America/Chicago
+    pickup_availabilties:
+      type: array
+      items:
+        $ref: '#/components/schemas/pickup_availability'
     purpose_of_shipment:
       type: object
       properties:
@@ -348,6 +734,80 @@ components:
         code:
           type: string
           example: CIF
+    quote_request:
+      type: object
+      required:
+        - origin_country_id
+        - destination_country_id
+        - is_document
+        - is_stackable
+        - is_liftgate_required
+        - purpose_of_shipment_id
+        - is_shipment_protection_required
+        - value_of_goods
+        - value_of_goods_currency_id
+        - mass_unit
+        - distance_unit
+        - iata_approved
+        - packages
+        - dangerous_goods
+        - hs_codes
+      properties:
+        origin_country_id:
+          type: integer
+          example: 1
+        destination_country_id:
+          type: integer
+          example: 2
+        value_of_goods:
+          type: string
+          format: Money
+          example: '600.00'
+        value_of_goods_currency_id:
+          type: string
+          format: 3 Digit Currency Code
+          example: ZAR
+        purpose_of_shipment_id:
+          type: integer
+          example: 8
+        is_document:
+          type: boolean
+          example: true
+        is_stackable:
+          type: boolean
+          example: true
+        is_liftgate_required:
+          type: boolean
+          example: true
+        is_shipment_protection_required:
+          type: boolean
+          example: true
+        dangerous_goods_present:
+          type: boolean
+          example: false
+        distance_unit:
+          type: string
+          format: cm/in
+          example: cm
+        mass_unit:
+          type: string
+          format: kg/lb
+          example: kg
+        iata_approved:
+          type: boolean
+          example: true
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/package'
+        dangerous_goods:
+          type: array
+          items:
+            $ref: '#/components/schemas/dangerous_goods'
+        hs_codes:
+          type: array
+          items:
+            $ref: '#/components/schemas/hs_code'
     quote_response:
       type: object
       properties:
@@ -410,76 +870,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hs_code'
-    quote:
+    scheduled_pickup_request:
       type: object
-      required:
-        - origin_country_id
-        - destination_country_id
-        - is_document
-        - is_stackable
-        - purpose_of_shipment_id
-        - is_shipment_protection_required
-        - value_of_goods
-        - value_of_goods_currency_id
-        - mass_unit
-        - distance_unit
-        - iata_approved
-        - packages
-        - dangerous_goods
-        - hs_codes
       properties:
-        origin_country_id:
+        scheduled_pickup:
+          type: object
+          properties:
+            time_from:
+              type: string
+              example: '12:00'
+            time_to:
+              type: string
+              example: '16:00.00'
+            scheduled_date:
+              type: string
+              example: 14-01-2020
+    scheduled_pickup:
+      type: object
+      properties:
+        scheduled_pickup:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 14
+            time_from:
+              type: string
+              example: '12:00'
+            time_to:
+              type: string
+              example: '16:00.00'
+            scheduled_date:
+              type: string
+              example: 14-01-2020
+            confirmation_number:
+              type: string
+              example: DSD5659S
+            status:
+              type: string
+              example: system_to_schedule
+            freight_confirmation_number:
+              type: string
+              example: SFEWF65
+            error_message:
+              type: string
+              example: Invalid time requested
+    shipment_event:
+      type: object
+      properties:
+        id:
           type: integer
           example: 1
-        destination_country_id:
-          type: integer
-          example: 2
-        value_of_goods:
+        description:
           type: string
-          format: Money
-          example: '600.00'
-        value_of_goods_currency_id:
+          example: Shipment picked up
+        date_time:
           type: string
-          format: 3 Digit Currency Code
-          example: ZAR
-        purpose_of_shipment_id:
-          type: integer
-          example: 8
-        is_document:
-          type: boolean
-          example: true
-        is_stackable:
-          type: boolean
-          example: true
-        is_shipment_protection_required:
-          type: boolean
-          example: true
-        dangerous_goods_present:
-          type: boolean
-          example: false
-        distance_unit:
+          example: '2019-12-20T16:40:03.000Z'
+        location:
           type: string
-          format: cm/in
-          example: cm
-        mass_unit:
-          type: string
-          format: kg/lb
-          example: kg
-        iata_approved:
-          type: boolean
-          example: true
-        packages:
+          example: America/Chicago
+    tracking:
+      type: object
+      properties:
+        shipment_events:
           type: array
           items:
-            $ref: '#/components/schemas/package'
-        dangerous_goods:
-          type: array
-          items:
-            $ref: '#/components/schemas/dangerous_goods'
-        hs_codes:
-          type: array
-          items:
-            $ref: '#/components/schemas/hs_code'
+            $ref: '#/components/schemas/shipment_event'
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
