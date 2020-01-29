@@ -1,14 +1,14 @@
 post:
   tags:
-    - Flow requests
-  summary: 'Quote - Create'
+    - Quote
+  summary: 'Quote'
   operationId: createQuote
   description: >
     Create a quote on the system, which will then have several estimates
 
     associated to it on which an order can be placed. These are called estimates
-    as the final costs will be determined when the undelying provider measures
-    the packages and provides a final offical billable weight. This (the
+    as the final costs will be determined when the underlying provider measures
+    the packages and provides a final official billable weight. This (the
     billable) is regularly incorrectly stated by clients
   responses:
     '201':
@@ -23,5 +23,5 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/quote'
+          $ref: '#/components/schemas/quote_request'
     description: Inventory item to add

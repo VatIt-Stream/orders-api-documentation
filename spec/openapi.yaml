@@ -4,19 +4,19 @@ servers:
     url: 'https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/'
 info:
   description: >
-    Version 1 - Contains ability to create quotes and view the pricing on the
-    different providers
+    Version 1.1.0 - API Documentation for Stream system
+  version: 1.1.0
 
-    sds
-  version: 1.0.0
-  title: This the the Stream API to be able to create quotes
+  title: This is the Stream API documentation to be able to interact with the Stream system
   contact:
     email: developers@vatitstream.com
 tags:
   - name: Initial Authentication
     description: Used to generate the bearer token
-  - name: Flow requests
-    description: General flow requests where the logic sits
+  - name: Quote
+    description: The flow for creating and fetching quotes
+  - name: Order
+    description: The flow for creating and fetching orders along with additional operations which can be peformed on orders
   - name: Static Data
     description: Used for lookup of information
 security:
