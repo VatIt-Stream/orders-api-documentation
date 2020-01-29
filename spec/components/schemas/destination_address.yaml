@@ -26,13 +26,13 @@ properties:
     example: Johannesburg
   province:
     type: string
-    example: Gauteng
+    example: CA
   postal_code:
     type: string
-    example: '1610'
+    example: '90001'
   country_id:
     type: integer
-    example: 226
+    example: 212
   email:
     type: string
     example: example@stream.com

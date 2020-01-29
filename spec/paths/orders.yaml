@@ -1,11 +1,12 @@
 post:
   tags:
     - Order
-  summary: 'Order'
+  summary: Order
   operationId: createOrder
   description: >
-    Creates an order on the stream system. If you will be uploading the files such as the commercial invoice or materials safety data sheet,
-    you can use a 'multipart/form-data' request body type instead
+    Creates an order on the stream system. If you will be uploading the files
+    such as the commercial invoice or materials safety data sheet, you can use a
+    'multipart/form-data' request body type instead
   responses:
     '201':
       description: item created

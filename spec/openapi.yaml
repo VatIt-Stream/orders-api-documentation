@@ -2,12 +2,15 @@ openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
     url: 'https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/'
+  - description: Local SwaggerHub API Auto Mocking
+    url: 'http://localhost:4000/client_api/v1/'
 info:
-  description: >
+  description: |
     Version 1.1.0 - API Documentation for Stream system
   version: 1.1.0
-
-  title: This is the Stream API documentation to be able to interact with the Stream system
+  title: >-
+    This is the Stream API documentation to be able to interact with the Stream
+    system
   contact:
     email: developers@vatitstream.com
 tags:
@@ -16,7 +19,9 @@ tags:
   - name: Quote
     description: The flow for creating and fetching quotes
   - name: Order
-    description: The flow for creating and fetching orders along with additional operations which can be peformed on orders
+    description: >-
+      The flow for creating and fetching orders along with additional operations
+      which can be peformed on orders
   - name: Static Data
     description: Used for lookup of information
 security:

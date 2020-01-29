@@ -13,40 +13,24 @@ properties:
     properties:
       origin_address:
         type: object
-        items:
-        $ref: '#/components/schemas/address'
+        items: null
+        $ref: '#/components/schemas/origin_address'
       destination_address:
         type: object
-        items:
-        $ref: '#/components/schemas/address'
+        items: null
+        $ref: '#/components/schemas/destination_address'
       pickup_instructions:
         type: string
-        example: 'Additional pickup information'
+        example: Additional pickup information
       purpose_of_shipment_id:
         type: integer
         example: 8
       quote_estimate_id:
         type: integer
-        example: 14124
+        example: 5
       customer_reference:
         type: string
-        example: "Ref0000"
+        example: Ref0000
       description_of_contents:
         type: string
-        example: 'Networking Equipment'
-      broker:
-        type: object
-        items:
-        $ref: '#/components/schemas/broker'
-      importer_of_record:
-        type: object
-        items:
-        $ref: '#/components/schemas/importer_of_record'
-      commercial_invoice:
-        type: string
-        format: binary
-        example: 'file'
-      materials_safety_data_sheet:
-        type: string
-        format: binary
-        example: 'file'
+        example: Networking Equipment

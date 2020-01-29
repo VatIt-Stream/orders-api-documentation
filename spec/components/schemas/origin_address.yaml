@@ -29,7 +29,7 @@ properties:
     example: Gauteng
   postal_code:
     type: string
-    example: '1610'
+    example: '2196'
   country_id:
     type: integer
     example: 226
