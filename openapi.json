@@ -4,6 +4,10 @@
     {
       "description": "SwaggerHub API Auto Mocking",
       "url": "https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/"
+    },
+    {
+      "description": "Local SwaggerHub API Auto Mocking",
+      "url": "http://localhost:4000/client_api/v1/"
     }
   ],
   "info": {
@@ -132,7 +136,7 @@
         }
       }
     },
-    "/order": {
+    "/orders": {
       "post": {
         "tags": [
           "Order"
@@ -459,7 +463,7 @@
           },
           "country_id": {
             "type": "integer",
-            "example": 235
+            "example": 226
           },
           "email": {
             "type": "string",
@@ -559,6 +563,61 @@
           "un_code": {
             "type": "string",
             "example": "UN3090"
+          }
+        }
+      },
+      "destination_address": {
+        "type": "object",
+        "required": [
+          "name",
+          "address_1",
+          "city",
+          "province",
+          "postal_code",
+          "country_id",
+          "email",
+          "phone"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "My House"
+          },
+          "company": {
+            "type": "string",
+            "example": "Company Name"
+          },
+          "address_1": {
+            "type": "string",
+            "example": "5 Open Street"
+          },
+          "address_2": {
+            "type": "string",
+            "example": "Melrose Arch"
+          },
+          "city": {
+            "type": "string",
+            "example": "Johannesburg"
+          },
+          "province": {
+            "type": "string",
+            "example": "CA"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "90001"
+          },
+          "country_id": {
+            "type": "integer",
+            "example": 212
+          },
+          "email": {
+            "type": "string",
+            "example": "example@stream.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+27825547358"
           }
         }
       },
@@ -924,12 +983,12 @@
               "origin_address": {
                 "type": "object",
                 "items": null,
-                "$ref": "#/components/schemas/address"
+                "$ref": "#/components/schemas/origin_address"
               },
               "destination_address": {
                 "type": "object",
                 "items": null,
-                "$ref": "#/components/schemas/address"
+                "$ref": "#/components/schemas/destination_address"
               },
               "pickup_instructions": {
                 "type": "string",
@@ -941,7 +1000,7 @@
               },
               "quote_estimate_id": {
                 "type": "integer",
-                "example": 14124
+                "example": 5
               },
               "customer_reference": {
                 "type": "string",
@@ -950,28 +1009,63 @@
               "description_of_contents": {
                 "type": "string",
                 "example": "Networking Equipment"
-              },
-              "broker": {
-                "type": "object",
-                "items": null,
-                "$ref": "#/components/schemas/broker"
-              },
-              "importer_of_record": {
-                "type": "object",
-                "items": null,
-                "$ref": "#/components/schemas/importer_of_record"
-              },
-              "commercial_invoice": {
-                "type": "string",
-                "format": "binary",
-                "example": "file"
-              },
-              "materials_safety_data_sheet": {
-                "type": "string",
-                "format": "binary",
-                "example": "file"
               }
             }
+          }
+        }
+      },
+      "origin_address": {
+        "type": "object",
+        "required": [
+          "name",
+          "address_1",
+          "city",
+          "province",
+          "postal_code",
+          "country_id",
+          "email",
+          "phone"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "My House"
+          },
+          "company": {
+            "type": "string",
+            "example": "Company Name"
+          },
+          "address_1": {
+            "type": "string",
+            "example": "5 Open Street"
+          },
+          "address_2": {
+            "type": "string",
+            "example": "Melrose Arch"
+          },
+          "city": {
+            "type": "string",
+            "example": "Johannesburg"
+          },
+          "province": {
+            "type": "string",
+            "example": "Gauteng"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "2196"
+          },
+          "country_id": {
+            "type": "integer",
+            "example": 226
+          },
+          "email": {
+            "type": "string",
+            "example": "example@stream.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+27825547358"
           }
         }
       },
@@ -1064,19 +1158,16 @@
           "value_of_goods_currency_id",
           "mass_unit",
           "distance_unit",
-          "iata_approved",
-          "packages",
-          "dangerous_goods",
-          "hs_codes"
+          "packages"
         ],
         "properties": {
           "origin_country_id": {
             "type": "integer",
-            "example": 1
+            "example": 226
           },
           "destination_country_id": {
             "type": "integer",
-            "example": 2
+            "example": 212
           },
           "value_of_goods": {
             "type": "string",
@@ -1122,26 +1213,10 @@
             "format": "kg/lb",
             "example": "kg"
           },
-          "iata_approved": {
-            "type": "boolean",
-            "example": true
-          },
           "packages": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/package"
-            }
-          },
-          "dangerous_goods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/dangerous_goods"
-            }
-          },
-          "hs_codes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/hs_code"
             }
           }
         }
