@@ -16,6 +16,10 @@ post:
             $ref: '#/components/schemas/order_response'
     '400':
       description: 'invalid input, object invalid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/standard_error'
   requestBody:
     content:
       application/json:

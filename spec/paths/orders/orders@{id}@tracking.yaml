@@ -20,4 +20,8 @@ get:
           schema:
             $ref: '#/components/schemas/tracking'
     '400':
-      description: bad input parameter
+      description: 'invalid input, object invalid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/standard_error'
