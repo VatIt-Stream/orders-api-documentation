@@ -6,7 +6,7 @@ get:
     - in: path
       name: id
       schema:
-        type: integer
+        type: string
       required: true
       description: id or reference_number of an existing order
   operationId: getOrder

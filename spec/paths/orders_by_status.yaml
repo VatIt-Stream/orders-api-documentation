@@ -4,7 +4,7 @@ get:
       name: status
       schema:
         type: string
-        example: in_progress
+        example: in_transit
       description: Filter to orders in this status
   summary: Orders
   tags:

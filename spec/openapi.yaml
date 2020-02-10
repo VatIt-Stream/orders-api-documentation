@@ -6,8 +6,8 @@ servers:
     url: 'http://localhost:4000/client_api/v1/'
 info:
   description: |
-    Version 1.2.0 - API Documentation for Stream system
-  version: 1.2.0
+    Version 1.2.1 - API Documentation for Stream system
+  version: 1.2.1
   title: >-
     This is the Stream API documentation to be able to interact with the Stream
     system
