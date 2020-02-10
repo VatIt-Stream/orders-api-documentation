@@ -11,8 +11,8 @@
     }
   ],
   "info": {
-    "description": "Version 1.2.0 - API Documentation for Stream system\n",
-    "version": "1.2.0",
+    "description": "Version 1.2.1 - API Documentation for Stream system\n",
+    "version": "1.2.1",
     "title": "This is the Stream API documentation to be able to interact with the Stream system",
     "contact": {
       "email": "developers@vatitstream.com"
@@ -167,7 +167,7 @@
             "name": "status",
             "schema": {
               "type": "string",
-              "example": "in_progress"
+              "example": "in_transit"
             },
             "description": "Filter to orders in this status"
           }
@@ -248,7 +248,7 @@
             "in": "path",
             "name": "id",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
             "required": true,
             "description": "id or reference_number of an existing order"
