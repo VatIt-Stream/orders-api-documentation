@@ -251,7 +251,7 @@
               "type": "integer"
             },
             "required": true,
-            "description": "id of an existing order"
+            "description": "id or reference_number of an existing order"
           }
         ],
         "operationId": "getOrder",

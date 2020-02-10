@@ -159,7 +159,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: id of an existing order
+          description: id or reference_number of an existing order
       operationId: getOrder
       description: |
         This will return all the details of the specified order
