@@ -1,7 +1,7 @@
 get:
   tags:
     - Order
-  summary: 'Order'
+  summary: "Order"
   parameters:
     - in: path
       name: id
@@ -11,17 +11,25 @@ get:
       description: id or reference_number of an existing order
   operationId: getOrder
   description: >
-    This will return all the details of the specified order
+    This will return all the details of the specified order.
+
+    <br><br>`NOTE`
+    <ul>
+      <li>When the order is finalized and an invoice has been issued the <b>invoice_data</b> field will be populated in the response. Prior to invoicing <b>invoice_data</b> will be blank.</li>
+      <li>The Vat & Duties will be a line item in the <b>invoice_data</b>, again this will only appear when the order is invoiced and the VAT & Duties are finalized and confirmed to be accurate.</li>
+      <li>All document fields ending with <b>_link</b> will have a temporary link to the file, each time a new GET request is made a new link will be generated with a new expiry.</li>
+    </ul>
+
   responses:
-    '200':
+    "200":
       description: get a existing order
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/order_response'
-    '400':
-      description: 'invalid input, object invalid'
+            $ref: "#/components/schemas/order_response"
+    "400":
+      description: "invalid input, object invalid"
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/standard_error'
+            $ref: "#/components/schemas/standard_error"
