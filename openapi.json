@@ -11,8 +11,8 @@
     }
   ],
   "info": {
-    "description": "Version 1.3.1 - API Documentation for Stream system\n",
-    "version": "1.3.1",
+    "description": "Version 1.3.2 - API Documentation for Stream\n",
+    "version": "1.3.2",
     "title": "This is the Stream API documentation to be able to interact with the Stream system",
     "contact": {
       "email": "developers@vatitstream.com"
@@ -29,7 +29,7 @@
     },
     {
       "name": "Order",
-      "description": "The flow for creating and fetching orders along with additional operations which can be peformed on orders"
+      "description": "The flow for creating and fetching orders along with additional operations which can be performed on orders"
     },
     {
       "name": "Static Data",
@@ -471,7 +471,7 @@
         ],
         "summary": "Quote",
         "operationId": "createQuote",
-        "description": "Create a quote on the system, which will then have several estimates\nassociated to it on which an order can be placed. These are called estimates as the final costs will be determined when the underlying provider measures the packages and provides a final official billable weight. This (the billable) is regularly incorrectly stated by clients\n",
+        "description": "Create a quote on the system, which will then have several estimates associated to it on which an order can be placed.\n<br> <br> These are called estimatesas the final costs will be determined when the underlying provider measures the packages and provides a final official billable weight.\n",
         "responses": {
           "201": {
             "description": "item created",
@@ -524,7 +524,7 @@
           }
         ],
         "operationId": "getQuote",
-        "description": "This will return the available pricing options (estimates) for the quote details supplied\n",
+        "description": "This will return the available pricing options (estimates) for the quote details supplied <br> <br> The transit times are an estimate from the service providers and from historical shipments. The values returned are in days.\n",
         "responses": {
           "200": {
             "description": "get a quote that was created recently",
@@ -796,11 +796,13 @@
             "properties": {
               "min_transit_time": {
                 "type": "integer",
+                "format": "in terms of Days, i.e 1 Day",
                 "example": 1
               },
               "max_transit_time": {
                 "type": "integer",
-                "example": 1
+                "format": "in terms of Days, i.e 5 Day",
+                "example": 5
               },
               "transit_time_note": {
                 "type": "string",
