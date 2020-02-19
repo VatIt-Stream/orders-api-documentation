@@ -15,7 +15,8 @@ get:
     details supplied
     <br>
     <br>
-    The transit times are an estimate from the service providers. The values returned are in days.
+    The transit times are an estimate from the service providers and from historical shipments.
+    The values returned are in days.
 
   responses:
     '200':
