@@ -5,11 +5,12 @@ post:
   operationId: createQuote
   description: >
     Create a quote on the system, which will then have several estimates
+    associated to it on which an order can be placed.
 
-    associated to it on which an order can be placed. These are called estimates
-    as the final costs will be determined when the underlying provider measures
-    the packages and provides a final official billable weight. This (the
-    billable) is regularly incorrectly stated by clients
+    <br>
+    <br>
+    These are called estimatesas the final costs will be determined when the underlying provider measures
+    the packages and provides a final official billable weight.
   responses:
     '201':
       description: item created

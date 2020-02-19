@@ -13,6 +13,10 @@ get:
   description: >
     This will return the available pricing options (estimates) for the quote
     details supplied
+    <br>
+    <br>
+    The transit times are an estimate from the service providers. The values returned are in days.
+
   responses:
     '200':
       description: get a quote that was created recently

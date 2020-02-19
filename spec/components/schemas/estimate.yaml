@@ -21,10 +21,12 @@ properties:
     properties:
       min_transit_time:
         type: integer
+        format: in terms of Days, i.e 1 Day
         example: 1
       max_transit_time:
         type: integer
-        example: 1
+        format: in terms of Days, i.e 5 Day
+        example: 5
       transit_time_note:
         type: string
         example: clearance delay possible

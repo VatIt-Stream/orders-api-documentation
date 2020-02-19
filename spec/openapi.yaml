@@ -6,8 +6,8 @@ servers:
     url: "http://localhost:4000/client_api/v1/"
 info:
   description: |
-    Version 1.3.1 - API Documentation for Stream system
-  version: 1.3.1
+    Version 1.3.2 - API Documentation for Stream
+  version: 1.3.2
   title: >-
     This is the Stream API documentation to be able to interact with the Stream
     system
@@ -21,7 +21,7 @@ tags:
   - name: Order
     description: >-
       The flow for creating and fetching orders along with additional operations
-      which can be peformed on orders
+      which can be performed on orders
   - name: Static Data
     description: Used for lookup of information
 security:
