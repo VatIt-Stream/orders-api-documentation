@@ -11,17 +11,14 @@ required:
   - value_of_goods_currency_id
   - mass_unit
   - distance_unit
-  - iata_approved
   - packages
-  - dangerous_goods
-  - hs_codes
 properties:
   origin_country_id:
     type: integer
-    example: 1
+    example: 226
   destination_country_id:
     type: integer
-    example: 2
+    example: 212
   value_of_goods:
     type: string
     format: Money
@@ -56,18 +53,7 @@ properties:
     type: string
     format: kg/lb
     example: kg
-  iata_approved:
-    type: boolean
-    example: true
   packages:
     type: array
     items:
       $ref: '#/components/schemas/package'
-  dangerous_goods:
-    type: array
-    items:
-      $ref: '#/components/schemas/dangerous_goods'
-  hs_codes:
-    type: array
-    items:
-      $ref: '#/components/schemas/hs_code'

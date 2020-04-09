@@ -1,0 +1,16 @@
+type: object
+required:
+  - address
+  - vat_number
+  - import_code
+properties:
+  address:
+    type: object
+    items:
+    $ref: '#/components/schemas/address'
+  vat_number:
+    type: string
+    example: 'BF4887450'
+  import_code:
+    type: string
+    example: 'S1A485'

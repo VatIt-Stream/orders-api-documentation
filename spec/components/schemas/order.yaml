@@ -1,0 +1,36 @@
+type: object
+properties:
+  order:
+    type: object
+    required:
+      - origin_address
+      - destination_address
+      - pickup_instructions
+      - purpose_of_shipment_id
+      - quote_estimate_id
+      - customer_reference
+      - description_of_contents
+    properties:
+      origin_address:
+        type: object
+        items: null
+        $ref: '#/components/schemas/origin_address'
+      destination_address:
+        type: object
+        items: null
+        $ref: '#/components/schemas/destination_address'
+      pickup_instructions:
+        type: string
+        example: Additional pickup information
+      purpose_of_shipment_id:
+        type: integer
+        example: 8
+      quote_estimate_id:
+        type: integer
+        example: 5
+      customer_reference:
+        type: string
+        example: Ref0000
+      description_of_contents:
+        type: string
+        example: Networking Equipment
