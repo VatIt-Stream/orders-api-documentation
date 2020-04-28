@@ -20,6 +20,12 @@ post:
         application/json:
           schema:
             $ref: '#/components/schemas/standard_error'
+    '429':
+      description: 'Rate limit exceeded'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rate_limit_error'
   requestBody:
     content:
       application/json:
