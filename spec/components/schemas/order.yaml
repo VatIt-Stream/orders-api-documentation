@@ -46,4 +46,12 @@ properties:
             weight: 1.1
             eccn: 12345
             country_id: 5
+      broker:
+        type: object
+        items: null
+        $ref: '#/components/schemas/broker'
+      importer_of_record:
+        type: object
+        items: null
+        $ref: '#/components/schemas/importer_of_record'
 

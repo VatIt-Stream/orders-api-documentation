@@ -38,3 +38,21 @@ get:
         application/json:
           schema:
             $ref: '#/components/schemas/standard_error'
+
+delete:
+  tags:
+    - Order
+  summary: Canceling an order
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: id of an existing order.
+  operationId: cancelOrder
+  description: |
+    This will cancel the order if possible.
+  responses:
+    '200':
+      description: canceled successfully.

@@ -109,7 +109,7 @@ properties:
       assigned_admin:
         type: string
         example: "admin@vatitstream.com"
-      invoice_date:
+      invoice_data:
         type: object
         item:
         $ref: "#/components/schemas/estimate"
