@@ -194,6 +194,14 @@ paths:
           <li>The Vat & Duties will be a line item in the <b>invoice_data</b>, again this will only appear when the order is invoiced and the VAT & Duties are finalized and confirmed to be accurate.</li>
           <li>All document fields ending with <b>_link</b> will have a temporary link to the file, each time a new GET request is made a new link will be generated with a new expiry.</li>
         </ul>
+
+        `Downloading files (such as the customs clearance documents)`<ul>
+          <li>All documents for an order are available by performing a GET request to the URL of the document.</li>
+          <li>This URL is provided in the order parameters returned by this GET request and include the _link suffix.</li>
+          <li>All links expire within a short period after this initial GET request, if you experience a broken document link you will need to repeat this order GET request.</li>
+          <li>This order GET response does not include the actual file binary, but rather a link to the actual file. Following this link will yield the actual file.</li>
+          <li>An example response parameter for a link to a file is <b>customs_clearance_document_link</b>.</li>
+        </ul>
       responses:
         '200':
           description: get a existing order
@@ -207,6 +215,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/standard_error'
+    delete:
+      tags:
+        - Order
+      summary: Canceling an order
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: id of an existing order.
+      operationId: cancelOrder
+      description: |
+        This will cancel the order if possible.
+      responses:
+        '200':
+          description: canceled successfully.
   '/orders/{id}/pickup_availabilities':
     get:
       tags:
@@ -808,7 +833,7 @@ components:
             assigned_admin:
               type: string
               example: admin@vatitstream.com
-            invoice_date:
+            invoice_data:
               type: object
               item: null
               $ref: '#/components/schemas/estimate'
@@ -865,6 +890,26 @@ components:
             description_of_contents:
               type: string
               example: Networking Equipment
+            hs_codes:
+              type: array
+              items:
+                $ref: '#/components/schemas/hs_code'
+              example:
+                - code: 100322
+                  cost: 100
+                  description: networking equipment
+                  quantity: 5
+                  weight: 1.1
+                  eccn: 12345
+                  country_id: 5
+            broker:
+              type: object
+              items: null
+              $ref: '#/components/schemas/broker'
+            importer_of_record:
+              type: object
+              items: null
+              $ref: '#/components/schemas/importer_of_record'
     origin_address:
       type: object
       required:

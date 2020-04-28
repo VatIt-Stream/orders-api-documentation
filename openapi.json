@@ -288,7 +288,7 @@
           }
         ],
         "operationId": "getOrder",
-        "description": "This will return all the details of the specified order.\n<br><br>`NOTE` <ul>\n  <li>When the order is finalized and an invoice has been issued the <b>invoice_data</b> field will be populated in the response. Prior to invoicing <b>invoice_data</b> will be blank.</li>\n  <li>The Vat & Duties will be a line item in the <b>invoice_data</b>, again this will only appear when the order is invoiced and the VAT & Duties are finalized and confirmed to be accurate.</li>\n  <li>All document fields ending with <b>_link</b> will have a temporary link to the file, each time a new GET request is made a new link will be generated with a new expiry.</li>\n</ul>\n",
+        "description": "This will return all the details of the specified order.\n<br><br>`NOTE` <ul>\n  <li>When the order is finalized and an invoice has been issued the <b>invoice_data</b> field will be populated in the response. Prior to invoicing <b>invoice_data</b> will be blank.</li>\n  <li>The Vat & Duties will be a line item in the <b>invoice_data</b>, again this will only appear when the order is invoiced and the VAT & Duties are finalized and confirmed to be accurate.</li>\n  <li>All document fields ending with <b>_link</b> will have a temporary link to the file, each time a new GET request is made a new link will be generated with a new expiry.</li>\n</ul>\n\n`Downloading files (such as the customs clearance documents)`<ul>\n  <li>All documents for an order are available by performing a GET request to the URL of the document.</li>\n  <li>This URL is provided in the order parameters returned by this GET request and include the _link suffix.</li>\n  <li>All links expire within a short period after this initial GET request, if you experience a broken document link you will need to repeat this order GET request.</li>\n  <li>This order GET response does not include the actual file binary, but rather a link to the actual file. Following this link will yield the actual file.</li>\n  <li>An example response parameter for a link to a file is <b>customs_clearance_document_link</b>.</li>\n</ul>\n",
         "responses": {
           "200": {
             "description": "get a existing order",
@@ -309,6 +309,30 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Canceling an order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id of an existing order."
+          }
+        ],
+        "operationId": "cancelOrder",
+        "description": "This will cancel the order if possible.\n",
+        "responses": {
+          "200": {
+            "description": "canceled successfully."
           }
         }
       }
@@ -1163,7 +1187,7 @@
                 "type": "string",
                 "example": "admin@vatitstream.com"
               },
-              "invoice_date": {
+              "invoice_data": {
                 "type": "object",
                 "item": null,
                 "$ref": "#/components/schemas/estimate"
@@ -1238,6 +1262,33 @@
               "description_of_contents": {
                 "type": "string",
                 "example": "Networking Equipment"
+              },
+              "hs_codes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/hs_code"
+                },
+                "example": [
+                  {
+                    "code": 100322,
+                    "cost": 100,
+                    "description": "networking equipment",
+                    "quantity": 5,
+                    "weight": 1.1,
+                    "eccn": 12345,
+                    "country_id": 5
+                  }
+                ]
+              },
+              "broker": {
+                "type": "object",
+                "items": null,
+                "$ref": "#/components/schemas/broker"
+              },
+              "importer_of_record": {
+                "type": "object",
+                "items": null,
+                "$ref": "#/components/schemas/importer_of_record"
               }
             }
           }
