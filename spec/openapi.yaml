@@ -6,6 +6,16 @@ servers:
     url: "http://localhost:4000/client_api/v1/"
 info:
   description: |
+
+    <b>Version 1.4.1 (2020-04-28) - API Documentation for Stream</b>
+    <ul>
+      <li></li>
+      <li>Added instructions for downloading files related to an order.</li>
+      <li>Allowed posting of HS codes for an order. See order POST </li>
+      <li>Added functionality to cancel an order. See order DELETE </li>
+      <li>Added functionality to add an importer of record and broker. See order POST </li>
+    </ul>
+    <br>
     <b>Version 1.4.0 (2020-04-09) - API Documentation for Stream</b>
     <ul>
       <li>Certain endpoints may be subject to rate limiting. In this case, a response code of 429 will be returned. See POST orders.</li>
