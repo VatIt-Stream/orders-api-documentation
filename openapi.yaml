@@ -22,7 +22,7 @@ info:
       <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>
     </ul>
     <br>
-  version: 1.4.0
+  version: 1.4.1
   title: Stream API
   contact:
     email: developers@vatitstream.com
