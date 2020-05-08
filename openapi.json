@@ -11,9 +11,9 @@
     }
   ],
   "info": {
-    "description": "Version 1.2.1 - API Documentation for Stream system\n",
-    "version": "1.2.1",
-    "title": "This is the Stream API documentation to be able to interact with the Stream system",
+    "description": "\n<b>Version 1.4.2 (2020-05-08) - API Documentation for Stream</b>\n<ul>\n  <li>Updated quote response body</li>\n</ul>\n<br>\n<b>Version 1.4.1 (2020-04-28) - API Documentation for Stream</b>\n<ul>\n  <li>Added instructions for downloading files related to an order.</li>\n  <li>Allowed posting of HS codes for an order. See order POST </li>\n  <li>Added functionality to cancel an order. See order DELETE </li>\n  <li>Added functionality to add an importer of record and broker. See order POST </li>\n</ul>\n<br>\n<b>Version 1.4.0 (2020-04-09) - API Documentation for Stream</b>\n<ul>\n  <li>Certain endpoints may be subject to rate limiting. In this case, a response code of 429 will be returned. See POST orders.</li>\n  <li>Export permits endpoint exposed. See static data section.</li>\n  <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>\n</ul>\n<br>\n",
+    "version": "1.4.2",
+    "title": "Stream API",
     "contact": {
       "email": "developers@vatitstream.com"
     }
@@ -29,7 +29,7 @@
     },
     {
       "name": "Order",
-      "description": "The flow for creating and fetching orders along with additional operations which can be peformed on orders"
+      "description": "The flow for creating and fetching orders along with additional operations which can be performed on orders"
     },
     {
       "name": "Static Data",
@@ -159,6 +159,29 @@
         }
       }
     },
+    "/order_statuses": {
+      "get": {
+        "summary": "Order statuses",
+        "tags": [
+          "Static Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "fetch all the different statuses an order may be in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/order_status"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders_by_status": {
       "get": {
         "parameters": [
@@ -224,6 +247,16 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rate_limit_error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -255,7 +288,7 @@
           }
         ],
         "operationId": "getOrder",
-        "description": "This will return all the details of the specified order\n",
+        "description": "This will return all the details of the specified order.\n<br><br>`NOTE` <ul>\n  <li>When the order is finalized and an invoice has been issued the <b>invoice_data</b> field will be populated in the response. Prior to invoicing <b>invoice_data</b> will be blank.</li>\n  <li>The Vat & Duties will be a line item in the <b>invoice_data</b>, again this will only appear when the order is invoiced and the VAT & Duties are finalized and confirmed to be accurate.</li>\n  <li>All document fields ending with <b>_link</b> will have a temporary link to the file, each time a new GET request is made a new link will be generated with a new expiry.</li>\n</ul>\n\n`Downloading files (such as the customs clearance documents)`<ul>\n  <li>All documents for an order are available by performing a GET request to the URL of the document.</li>\n  <li>This URL is provided in the order parameters returned by this GET request and include the _link suffix.</li>\n  <li>All links expire within a short period after this initial GET request, if you experience a broken document link you will need to repeat this order GET request.</li>\n  <li>This order GET response does not include the actual file binary, but rather a link to the actual file. Following this link will yield the actual file.</li>\n  <li>An example response parameter for a link to a file is <b>customs_clearance_document_link</b>.</li>\n</ul>\n",
         "responses": {
           "200": {
             "description": "get a existing order",
@@ -276,6 +309,30 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Canceling an order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id of an existing order."
+          }
+        ],
+        "operationId": "cancelOrder",
+        "description": "This will cancel the order if possible.\n",
+        "responses": {
+          "200": {
+            "description": "canceled successfully."
           }
         }
       }
@@ -448,7 +505,7 @@
         ],
         "summary": "Quote",
         "operationId": "createQuote",
-        "description": "Create a quote on the system, which will then have several estimates\nassociated to it on which an order can be placed. These are called estimates as the final costs will be determined when the underlying provider measures the packages and provides a final official billable weight. This (the billable) is regularly incorrectly stated by clients\n",
+        "description": "Create a quote on the system, which will then have several estimates associated to it on which an order can be placed.\n<br> <br> These are called estimatesas the final costs will be determined when the underlying provider measures the packages and provides a final official billable weight.\n",
         "responses": {
           "201": {
             "description": "item created",
@@ -501,7 +558,7 @@
           }
         ],
         "operationId": "getQuote",
-        "description": "This will return the available pricing options (estimates) for the quote details supplied\n",
+        "description": "This will return the available pricing options (estimates) for the quote details supplied <br> <br> The transit times are an estimate from the service providers and from historical shipments. The values returned are in days.\n",
         "responses": {
           "200": {
             "description": "get a quote that was created recently",
@@ -519,6 +576,29 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/standard_error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system_configs/export_permit_origin_country_ids": {
+      "get": {
+        "summary": "Export Permit Origin Country Ids",
+        "tags": [
+          "Static Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "This will fetch ids (as returned by the /countries endpoint) of all the countries that require an export permit. Export permits are required for orders leaving the specified countries before it is possible to generate waybill.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/export_permit_origin_country_id"
+                  }
                 }
               }
             }
@@ -773,11 +853,13 @@
             "properties": {
               "min_transit_time": {
                 "type": "integer",
+                "format": "in terms of Days, i.e 1 Day",
                 "example": 1
               },
               "max_transit_time": {
                 "type": "integer",
-                "example": 1
+                "format": "in terms of Days, i.e 5 Day",
+                "example": 5
               },
               "transit_time_note": {
                 "type": "string",
@@ -849,6 +931,10 @@
             }
           }
         }
+      },
+      "export_permit_origin_country_id": {
+        "type": "integer",
+        "example": 254
       },
       "hs_code": {
         "type": "object",
@@ -1100,8 +1186,35 @@
               "assigned_admin": {
                 "type": "string",
                 "example": "admin@vatitstream.com"
+              },
+              "invoice_data": {
+                "type": "object",
+                "item": null,
+                "$ref": "#/components/schemas/estimate"
               }
             }
+          }
+        }
+      },
+      "order_status": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "value"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "description": {
+            "type": "string",
+            "example": "In Transit"
+          },
+          "value": {
+            "type": "string",
+            "example": "in_transit"
           }
         }
       },
@@ -1149,6 +1262,33 @@
               "description_of_contents": {
                 "type": "string",
                 "example": "Networking Equipment"
+              },
+              "hs_codes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/hs_code"
+                },
+                "example": [
+                  {
+                    "code": 100322,
+                    "cost": 100,
+                    "description": "networking equipment",
+                    "quantity": 5,
+                    "weight": 1.1,
+                    "eccn": 12345,
+                    "country_id": 5
+                  }
+                ]
+              },
+              "broker": {
+                "type": "object",
+                "items": null,
+                "$ref": "#/components/schemas/broker"
+              },
+              "importer_of_record": {
+                "type": "object",
+                "items": null,
+                "$ref": "#/components/schemas/importer_of_record"
               }
             }
           }
@@ -1339,10 +1479,6 @@
             "type": "boolean",
             "example": true
           },
-          "dangerous_goods_present": {
-            "type": "boolean",
-            "example": false
-          },
           "distance_unit": {
             "type": "string",
             "format": "cm/in",
@@ -1373,76 +1509,19 @@
             "items": {
               "$ref": "#/components/schemas/estimate"
             }
-          },
-          "origin_country_id": {
-            "type": "integer",
-            "example": 1
-          },
-          "destination_country_id": {
-            "type": "integer",
-            "example": 2
-          },
-          "value_of_goods": {
-            "type": "string",
-            "format": "Money",
-            "example": "600.00"
-          },
-          "value_of_goods_currency_id": {
-            "type": "string",
-            "format": "3 Digit Currency Code",
-            "example": "ZAR"
-          },
-          "purpose_of_shipment_id": {
-            "type": "integer",
-            "example": 8
-          },
-          "is_document": {
-            "type": "boolean",
-            "example": true
-          },
-          "is_stackable": {
-            "type": "boolean",
-            "example": true
-          },
-          "is_shipment_protection_required": {
-            "type": "boolean",
-            "example": true
-          },
-          "dangerous_goods_present": {
+          }
+        }
+      },
+      "rate_limit_error": {
+        "type": "object",
+        "properties": {
+          "success": {
             "type": "boolean",
             "example": false
           },
-          "distance_unit": {
+          "error": {
             "type": "string",
-            "format": "cm/in",
-            "example": "cm"
-          },
-          "mass_unit": {
-            "type": "string",
-            "format": "kg/lb",
-            "example": "kg"
-          },
-          "iata_approved": {
-            "type": "boolean",
-            "example": true
-          },
-          "packages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/package"
-            }
-          },
-          "dangerous_goods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/dangerous_goods"
-            }
-          },
-          "hs_codes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/hs_code"
-            }
+            "example": "Too many requests (20/20 in 60 seconds)"
           }
         }
       },
