@@ -98,14 +98,14 @@ properties:
         type: object
         item:
         $ref: "#/components/schemas/address"
-      broker:
+      broker_address:
         type: object
         item:
-        $ref: "#/components/schemas/broker"
-      importer_of_record:
+        $ref: "#/components/schemas/broker_address"
+      importer_of_record_address:
         type: object
         item:
-        $ref: "#/components/schemas/importer_of_record"
+        $ref: "#/components/schemas/importer_of_record_address"
       assigned_admin:
         type: string
         example: "admin@vatitstream.com"
