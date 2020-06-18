@@ -7,6 +7,10 @@ servers:
 info:
   description: |
 
+    <b>Version 1.4.4 (2020-06-18) - API Documentation for Stream</b>
+    <ul>
+      <li>Added max and min lenghts for address fields, see Address schema for more.</li>
+    </ul>
     <b>Version 1.4.3 (2020-06-15) - API Documentation for Stream</b>
     <ul>
       <li>Changed broker and importer of record in request body for Orders POST</li>
@@ -32,7 +36,7 @@ info:
       <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>
     </ul>
     <br>
-  version: 1.4.3
+  version: 1.4.4
   title: >-
     Stream API
   contact:
