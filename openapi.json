@@ -11,8 +11,8 @@
     }
   ],
   "info": {
-    "description": "\n<b>Version 1.4.2 (2020-05-08) - API Documentation for Stream</b>\n<ul>\n  <li>Updated quote response body</li>\n</ul>\n<br>\n<b>Version 1.4.1 (2020-04-28) - API Documentation for Stream</b>\n<ul>\n  <li>Added instructions for downloading files related to an order.</li>\n  <li>Allowed posting of HS codes for an order. See order POST </li>\n  <li>Added functionality to cancel an order. See order DELETE </li>\n  <li>Added functionality to add an importer of record and broker. See order POST </li>\n</ul>\n<br>\n<b>Version 1.4.0 (2020-04-09) - API Documentation for Stream</b>\n<ul>\n  <li>Certain endpoints may be subject to rate limiting. In this case, a response code of 429 will be returned. See POST orders.</li>\n  <li>Export permits endpoint exposed. See static data section.</li>\n  <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>\n</ul>\n<br>\n",
-    "version": "1.4.2",
+    "description": "\n<b>Version 1.4.4 (2020-06-18) - API Documentation for Stream</b>\n<ul>\n  <li>Added max and min lenghts for address fields, see Address schema for more.</li>\n</ul>\n<b>Version 1.4.3 (2020-06-15) - API Documentation for Stream</b>\n<ul>\n  <li>Changed broker and importer of record in request body for Orders POST</li>\n  <li>Changed broker and importer of record in response body for Orders POST</li>\n</ul>\n<b>Version 1.4.2 (2020-05-08) - API Documentation for Stream</b>\n<ul>\n  <li>Updated quote response body</li>\n</ul>\n<br>\n<b>Version 1.4.1 (2020-04-28) - API Documentation for Stream</b>\n<ul>\n  <li>Added instructions for downloading files related to an order.</li>\n  <li>Allowed posting of HS codes for an order. See order POST </li>\n  <li>Added functionality to cancel an order. See order DELETE </li>\n  <li>Added functionality to add an importer of record and broker. See order POST </li>\n</ul>\n<br>\n<b>Version 1.4.0 (2020-04-09) - API Documentation for Stream</b>\n<ul>\n  <li>Certain endpoints may be subject to rate limiting. In this case, a response code of 429 will be returned. See POST orders.</li>\n  <li>Export permits endpoint exposed. See static data section.</li>\n  <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>\n</ul>\n<br>\n",
+    "version": "1.4.4",
     "title": "Stream API",
     "contact": {
       "email": "developers@vatitstream.com"
@@ -637,26 +637,32 @@
         "properties": {
           "name": {
             "type": "string",
+            "maxLength": 35,
             "example": "My House"
           },
           "company": {
             "type": "string",
+            "maxLength": 35,
             "example": "Company Name"
           },
           "address_1": {
             "type": "string",
+            "maxLength": 34,
             "example": "5 Open Street"
           },
           "address_2": {
             "type": "string",
+            "maxLength": 34,
             "example": "Melrose Arch"
           },
           "city": {
             "type": "string",
+            "maxLength": 20,
             "example": "Johannesburg"
           },
           "province": {
             "type": "string",
+            "maxLength": 35,
             "example": "Gauteng"
           },
           "postal_code": {
@@ -704,18 +710,59 @@
           }
         }
       },
-      "broker": {
+      "broker_address": {
         "type": "object",
         "required": [
-          "address",
           "vat_number",
-          "import_code"
+          "import_code",
+          "address_1",
+          "city",
+          "province",
+          "postal_code",
+          "country_id",
+          "email",
+          "phone"
         ],
         "properties": {
-          "address": {
-            "type": "object",
-            "items": null,
-            "$ref": "#/components/schemas/address"
+          "name": {
+            "type": "string",
+            "example": "My House"
+          },
+          "company": {
+            "type": "string",
+            "example": "Company Name"
+          },
+          "address_1": {
+            "type": "string",
+            "example": "5 Open Street"
+          },
+          "address_2": {
+            "type": "string",
+            "example": "Melrose Arch"
+          },
+          "city": {
+            "type": "string",
+            "example": "Johannesburg"
+          },
+          "province": {
+            "type": "string",
+            "example": "Gauteng"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "1610"
+          },
+          "country_id": {
+            "type": "integer",
+            "example": 226
+          },
+          "email": {
+            "type": "string",
+            "example": "example@stream.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+27825547358"
           },
           "vat_number": {
             "type": "string",
@@ -979,18 +1026,59 @@
           }
         }
       },
-      "importer_of_record": {
+      "importer_of_record_address": {
         "type": "object",
         "required": [
-          "address",
           "vat_number",
-          "import_code"
+          "import_code",
+          "address_1",
+          "city",
+          "province",
+          "postal_code",
+          "country_id",
+          "email",
+          "phone"
         ],
         "properties": {
-          "address": {
-            "type": "object",
-            "items": null,
-            "$ref": "#/components/schemas/address"
+          "name": {
+            "type": "string",
+            "example": "My House"
+          },
+          "company": {
+            "type": "string",
+            "example": "Company Name"
+          },
+          "address_1": {
+            "type": "string",
+            "example": "5 Open Street"
+          },
+          "address_2": {
+            "type": "string",
+            "example": "Melrose Arch"
+          },
+          "city": {
+            "type": "string",
+            "example": "Johannesburg"
+          },
+          "province": {
+            "type": "string",
+            "example": "Gauteng"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "1610"
+          },
+          "country_id": {
+            "type": "integer",
+            "example": 226
+          },
+          "email": {
+            "type": "string",
+            "example": "example@stream.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+27825547358"
           },
           "vat_number": {
             "type": "string",
@@ -1173,15 +1261,15 @@
                 "item": null,
                 "$ref": "#/components/schemas/address"
               },
-              "broker": {
+              "broker_address": {
                 "type": "object",
                 "item": null,
-                "$ref": "#/components/schemas/broker"
+                "$ref": "#/components/schemas/broker_address"
               },
-              "importer_of_record": {
+              "importer_of_record_address": {
                 "type": "object",
                 "item": null,
-                "$ref": "#/components/schemas/importer_of_record"
+                "$ref": "#/components/schemas/importer_of_record_address"
               },
               "assigned_admin": {
                 "type": "string",
@@ -1280,15 +1368,15 @@
                   }
                 ]
               },
-              "broker": {
+              "broker_address": {
                 "type": "object",
                 "items": null,
-                "$ref": "#/components/schemas/broker"
+                "$ref": "#/components/schemas/broker_address"
               },
-              "importer_of_record": {
+              "importer_of_record_address": {
                 "type": "object",
                 "items": null,
-                "$ref": "#/components/schemas/importer_of_record"
+                "$ref": "#/components/schemas/importer_of_record_address"
               }
             }
           }

@@ -7,6 +7,15 @@ servers:
 info:
   description: |
 
+    <b>Version 1.4.4 (2020-06-18) - API Documentation for Stream</b>
+    <ul>
+      <li>Added max and min lenghts for address fields, see Address schema for more.</li>
+    </ul>
+    <b>Version 1.4.3 (2020-06-15) - API Documentation for Stream</b>
+    <ul>
+      <li>Changed broker and importer of record in request body for Orders POST</li>
+      <li>Changed broker and importer of record in response body for Orders POST</li>
+    </ul>
     <b>Version 1.4.2 (2020-05-08) - API Documentation for Stream</b>
     <ul>
       <li>Updated quote response body</li>
@@ -27,7 +36,7 @@ info:
       <li>Only one order will be able to be placed on an quote_estimate_id, once a quote_estimate_id has an order associated to it you will need to request a new quote and get a new estimate</li>
     </ul>
     <br>
-  version: 1.4.2
+  version: 1.4.4
   title: Stream API
   contact:
     email: developers@vatitstream.com
@@ -443,21 +452,27 @@ components:
       properties:
         name:
           type: string
+          maxLength: 35
           example: My House
         company:
           type: string
+          maxLength: 35
           example: Company Name
         address_1:
           type: string
+          maxLength: 34
           example: 5 Open Street
         address_2:
           type: string
+          maxLength: 34
           example: Melrose Arch
         city:
           type: string
+          maxLength: 20
           example: Johannesburg
         province:
           type: string
+          maxLength: 35
           example: Gauteng
         postal_code:
           type: string
@@ -489,17 +504,49 @@ components:
             password:
               type: string
               example: p@55w0rd
-    broker:
+    broker_address:
       type: object
       required:
-        - address
         - vat_number
         - import_code
+        - address_1
+        - city
+        - province
+        - postal_code
+        - country_id
+        - email
+        - phone
       properties:
-        address:
-          type: object
-          items: null
-          $ref: '#/components/schemas/address'
+        name:
+          type: string
+          example: My House
+        company:
+          type: string
+          example: Company Name
+        address_1:
+          type: string
+          example: 5 Open Street
+        address_2:
+          type: string
+          example: Melrose Arch
+        city:
+          type: string
+          example: Johannesburg
+        province:
+          type: string
+          example: Gauteng
+        postal_code:
+          type: string
+          example: '1610'
+        country_id:
+          type: integer
+          example: 226
+        email:
+          type: string
+          example: example@stream.com
+        phone:
+          type: string
+          example: '+27825547358'
         vat_number:
           type: string
           example: BF4887450
@@ -690,17 +737,49 @@ components:
           type: integer
           format: (country of origin of goods)
           example: 5
-    importer_of_record:
+    importer_of_record_address:
       type: object
       required:
-        - address
         - vat_number
         - import_code
+        - address_1
+        - city
+        - province
+        - postal_code
+        - country_id
+        - email
+        - phone
       properties:
-        address:
-          type: object
-          items: null
-          $ref: '#/components/schemas/address'
+        name:
+          type: string
+          example: My House
+        company:
+          type: string
+          example: Company Name
+        address_1:
+          type: string
+          example: 5 Open Street
+        address_2:
+          type: string
+          example: Melrose Arch
+        city:
+          type: string
+          example: Johannesburg
+        province:
+          type: string
+          example: Gauteng
+        postal_code:
+          type: string
+          example: '1610'
+        country_id:
+          type: integer
+          example: 226
+        email:
+          type: string
+          example: example@stream.com
+        phone:
+          type: string
+          example: '+27825547358'
         vat_number:
           type: string
           example: BF4887450
@@ -836,14 +915,14 @@ components:
               type: object
               item: null
               $ref: '#/components/schemas/address'
-            broker:
+            broker_address:
               type: object
               item: null
-              $ref: '#/components/schemas/broker'
-            importer_of_record:
+              $ref: '#/components/schemas/broker_address'
+            importer_of_record_address:
               type: object
               item: null
-              $ref: '#/components/schemas/importer_of_record'
+              $ref: '#/components/schemas/importer_of_record_address'
             assigned_admin:
               type: string
               example: admin@vatitstream.com
@@ -916,14 +995,14 @@ components:
                   weight: 1.1
                   eccn: 12345
                   country_id: 5
-            broker:
+            broker_address:
               type: object
               items: null
-              $ref: '#/components/schemas/broker'
-            importer_of_record:
+              $ref: '#/components/schemas/broker_address'
+            importer_of_record_address:
               type: object
               items: null
-              $ref: '#/components/schemas/importer_of_record'
+              $ref: '#/components/schemas/importer_of_record_address'
     origin_address:
       type: object
       required:
