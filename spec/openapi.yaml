@@ -2,6 +2,8 @@ openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
     url: "https://stream-orders-api-sandbox.herokuapp.com/client_api/v1/"
+  - description: Production Endpoint
+    url: "https://orders-api-production.vatit-stream.com/client_api/v1/"
 info:
   description: |
 
