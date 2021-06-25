@@ -7,6 +7,10 @@ servers:
 info:
   description: |
 
+    <b>Version 1.4.5 (2020-06-18) - API Documentation for Stream</b>
+    <ul>
+      <li>Added import and export code when posting to orders for origin and destination address.
+    </ul>
     <b>Version 1.4.4 (2020-06-18) - API Documentation for Stream</b>
     <ul>
       <li>Added max and min lenghts for address fields, see Address schema for more.</li>
