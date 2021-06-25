@@ -30,6 +30,9 @@ properties:
   postal_code:
     type: string
     example: '90001'
+  import_code:
+    type: string
+    example: '11111'
   country_id:
     type: integer
     example: 212

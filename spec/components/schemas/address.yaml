@@ -36,6 +36,12 @@ properties:
   postal_code:
     type: string
     example: '1610'
+  import_code:
+    type: string
+    example: '11111'
+  export_code:
+    type: string
+    example: '22222'
   country_id:
     type: integer
     example: 226

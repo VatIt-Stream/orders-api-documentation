@@ -33,6 +33,9 @@ properties:
   country_id:
     type: integer
     example: 226
+  export_code:
+    type: string
+    example: '22222'
   email:
     type: string
     example: example@stream.com
