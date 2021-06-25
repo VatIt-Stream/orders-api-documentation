@@ -50,7 +50,16 @@ tags:
   - name: Order
     description: >-
       The flow for creating and fetching orders along with additional operations
-      which can be performed on orders
+      which can be performed on orders.
+      <br>
+      <br>
+      <strong>A note for the addresses posted</strong>: Import and Export code refer to specific codes used for importing/exporting to different countries
+      eg.
+      <ul>
+        <li>ZA: Import Number/Export Number</li>
+        <li>USA: EIN</li>
+        <li>UK: EORI</li>
+      </ul>
   - name: Static Data
     description: Used for lookup of information
 security:

@@ -17,22 +17,22 @@ properties:
     example: Company Name
   address_1:
     type: string
-    example: 5 Open Street
+    example: Abbey Road
   address_2:
     type: string
-    example: Melrose Arch
+    example: Putney
   city:
     type: string
-    example: Johannesburg
+    example: London
   province:
     type: string
-    example: CA
+    example: London
   postal_code:
     type: string
-    example: '90001'
+    example: SW1A 2AA
   import_code:
     type: string
-    example: '11111'
+    example: 'GB000000000000'
   country_id:
     type: integer
     example: 212

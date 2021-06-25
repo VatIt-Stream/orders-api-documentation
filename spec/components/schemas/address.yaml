@@ -38,10 +38,10 @@ properties:
     example: '1610'
   import_code:
     type: string
-    example: '11111'
+    example: 'GB000000000000'
   export_code:
     type: string
-    example: '22222'
+    example: 'GB000000000000'
   country_id:
     type: integer
     example: 226
