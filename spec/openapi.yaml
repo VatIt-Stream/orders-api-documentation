@@ -7,25 +7,30 @@ servers:
 info:
   description: |
 
-    <b>Version 1.4.5 (2020-06-18) - API Documentation for Stream</b>
+    <p> <b> Find our version 2 docs here <a href="https://orders-api-v2-docs.vatit-stream.com/swagger-ui/#/"> https://orders-api-v2-docs.vatit-stream.com/swagger-ui/#/ </a> </b> </p>
+    <b>Update 1.4.6 (2022-01-14) - API Documentation for Stream</b>
+    <ul>
+      <li>Improved error messaging from failed interactions with service providers.
+    </ul>
+    <b>Update 1.4.5 (2020-06-18) - API Documentation for Stream</b>
     <ul>
       <li>Added import and export code when posting to orders for origin and destination address.
     </ul>
-    <b>Version 1.4.4 (2020-06-18) - API Documentation for Stream</b>
+    <b>Update 1.4.4 (2020-06-18) - API Documentation for Stream</b>
     <ul>
-      <li>Added max and min lenghts for address fields, see Address schema for more.</li>
+      <li>Added max and min lengths for address fields, see Address schema for more.</li>
     </ul>
-    <b>Version 1.4.3 (2020-06-15) - API Documentation for Stream</b>
+    <b>Update 1.4.3 (2020-06-15) - API Documentation for Stream</b>
     <ul>
       <li>Changed broker and importer of record in request body for Orders POST</li>
       <li>Changed broker and importer of record in response body for Orders POST</li>
     </ul>
-    <b>Version 1.4.2 (2020-05-08) - API Documentation for Stream</b>
+    <b>Update 1.4.2 (2020-05-08) - API Documentation for Stream</b>
     <ul>
       <li>Updated quote response body</li>
     </ul>
     <br>
-    <b>Version 1.4.1 (2020-04-28) - API Documentation for Stream</b>
+    <b>Update 1.4.1 (2020-04-28) - API Documentation for Stream</b>
     <ul>
       <li>Added instructions for downloading files related to an order.</li>
       <li>Allowed posting of HS codes for an order. See order POST </li>
@@ -33,7 +38,7 @@ info:
       <li>Added functionality to add an importer of record and broker. See order POST </li>
     </ul>
     <br>
-    <b>Version 1.4.0 (2020-04-09) - API Documentation for Stream</b>
+    <b>Update 1.4.0 (2020-04-09) - API Documentation for Stream</b>
     <ul>
       <li>Certain endpoints may be subject to rate limiting. In this case, a response code of 429 will be returned. See POST orders.</li>
       <li>Export permits endpoint exposed. See static data section.</li>
@@ -41,7 +46,7 @@ info:
     </ul>
     <br>
 
-  version: 1.4.4
+  version: 1
   title: >-
     Stream API
   contact:
