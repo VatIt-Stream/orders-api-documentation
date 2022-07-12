@@ -675,7 +675,7 @@
           },
           "export_code": {
             "type": "string",
-            "example": "GB000000000000"
+            "example": "12345678"
           },
           "country_id": {
             "type": "integer",

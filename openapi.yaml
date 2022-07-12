@@ -496,7 +496,7 @@ components:
           example: GB000000000000
         export_code:
           type: string
-          example: GB000000000000
+          example: '12345678'
         country_id:
           type: integer
           example: 226
